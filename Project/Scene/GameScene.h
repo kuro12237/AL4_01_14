@@ -5,6 +5,8 @@
 
 #include"GameObject/Player/Player.h"
 #include"GameObject/SkyDome/SkyDome.h"
+#include"GameObject/Enemy/Enemy.h"
+#include"FileLoader.h"
 
 class GameScene :public IScene
 {
@@ -22,8 +24,21 @@ public:
 
 private:
 
+	void EnemySpown();
+
+	void EnemyPop(Vector3 pos);
+
 	ViewProjection viewProjection_ = {};
 
 	unique_ptr<Player>player_ = nullptr;
 	unique_ptr<Skydome>skydome_ = nullptr;
+
+	list<shared_ptr<Enemy>>enemys_ = {};
+	
+	std::stringstream file;
+
+	bool EnemyWaitFlag_ = false;
+	int32_t WaitTimer_ = 0;
+	uint32_t enemyHandle_ = 0;
+
 };

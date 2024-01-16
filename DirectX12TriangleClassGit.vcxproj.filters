@@ -136,6 +136,9 @@
     <Filter Include="Project\GameObject\SkyDome">
       <UniqueIdentifier>{01057d84-5820-4eb7-84c7-5fe3a5430939}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\enemy">
+      <UniqueIdentifier>{ba80d679-7495-4556-abb8-7bac806c3a9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -285,9 +288,14 @@
     <ClCompile Include="Project\GameObject\Player\Player.cpp">
       <Filter>Project\GameObject\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\Player\PlayerBullet.cpp" />
     <ClCompile Include="Project\GameObject\SkyDome\SkyDome.cpp">
       <Filter>Project\GameObject\SkyDome</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
+      <Filter>Project\GameObject\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Player\PlayerBullet.cpp">
+      <Filter>Project\GameObject\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -485,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\SkyDome\SkyDome.h">
       <Filter>Project\GameObject\SkyDome</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
+      <Filter>Project\GameObject\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
