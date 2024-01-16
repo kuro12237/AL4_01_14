@@ -112,9 +112,6 @@
     <Filter Include="CLEYERA\Particle\ParticlePlane">
       <UniqueIdentifier>{c073a108-c039-4bd3-9fbf-37b30c3aeafc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project\Scene\CreatePhongModelScene">
-      <UniqueIdentifier>{920f8ac2-e3af-4d13-b3b4-6e11c801e5d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CLEYERA\math\Quaternion">
       <UniqueIdentifier>{d1cf5c41-681a-4ff6-92df-656d7304e1f1}</UniqueIdentifier>
     </Filter>
@@ -134,13 +131,7 @@
       <UniqueIdentifier>{fdcd6478-86f6-4622-a9fa-5a063fc9b748}</UniqueIdentifier>
     </Filter>
     <Filter Include="Project\GameObject\Player">
-      <UniqueIdentifier>{79d80322-dbe6-49e2-ac1b-32b8eb2500f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project\GameObject\Stage">
-      <UniqueIdentifier>{b11254e4-50a1-485b-90dd-fbcfa61639ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project\GameObject\Player\Hammer">
-      <UniqueIdentifier>{1d43273f-c7a6-4a2e-9d61-2a1064daeff3}</UniqueIdentifier>
+      <UniqueIdentifier>{a2e97eac-857d-4cb7-bf0d-c541638fb98e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -252,12 +243,6 @@
     <ClCompile Include="CLEYERA\Audio\AudioDataResource.cpp">
       <Filter>CLEYERA\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Scene\CreatePhongModelScene.cpp">
-      <Filter>Project\Scene\CreatePhongModelScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\Scene\MTScene.cpp">
-      <Filter>Project\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CLEYERA\math\Quaternion\QuaternionTransform.cpp">
       <Filter>CLEYERA\math\Quaternion</Filter>
     </ClCompile>
@@ -279,9 +264,6 @@
     <ClCompile Include="CLEYERA\Model\Game3dObject.cpp">
       <Filter>CLEYERA\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Scene\GameObject3dTest.cpp">
-      <Filter>Project\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CLEYERA\Utility\CollisionManager\CollisionManager.cpp">
       <Filter>CLEYERA\Utility\CollisionManager</Filter>
     </ClCompile>
@@ -297,14 +279,8 @@
     <ClCompile Include="Project\Scene\GameScene.cpp">
       <Filter>Project\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\Player\Hammer\Hammer.cpp">
-      <Filter>Project\GameObject\Player\Hammer</Filter>
-    </ClCompile>
     <ClCompile Include="Project\GameObject\Player\Player.cpp">
       <Filter>Project\GameObject\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\GameObject\Stage\Stage.cpp">
-      <Filter>Project\GameObject\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -428,12 +404,6 @@
     <ClInclude Include="CLEYERA\Audio\AudioDataResource.h">
       <Filter>CLEYERA\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Project\Scene\CreatePhongModelScene.h">
-      <Filter>Project\Scene\CreatePhongModelScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Scene\MTScene.h">
-      <Filter>Project\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="CLEYERA\math\Quaternion\QuaternionTransform.h">
       <Filter>CLEYERA\math\Quaternion</Filter>
     </ClInclude>
@@ -466,9 +436,6 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Model\Game3dObject.h">
       <Filter>CLEYERA\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\Scene\GameObject3dTest.h">
-      <Filter>Project\Scene</Filter>
     </ClInclude>
     <ClInclude Include="CLEYERA\Utility\CollisionManager\CollisionManager.h">
       <Filter>CLEYERA\Utility\CollisionManager</Filter>
@@ -503,14 +470,8 @@
     <ClInclude Include="Project\Scene\GameScene.h">
       <Filter>Project\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\Player\Hammer\Hammer.h">
-      <Filter>Project\GameObject\Player\Hammer</Filter>
-    </ClInclude>
     <ClInclude Include="Project\GameObject\Player\Player.h">
       <Filter>Project\GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\GameObject\Stage\Stage.h">
-      <Filter>Project\GameObject\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

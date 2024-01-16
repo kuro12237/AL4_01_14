@@ -4,7 +4,7 @@ GameManager::GameManager()
 {
 	Cleyera::Initialize();
 
-	WinApp::SetTiTleName(L"凝ってますね");
+	WinApp::SetTiTleName(L"CLEYERA");
 	Scene_ = new GameScene();
 
 	Scene_->Initialize();
