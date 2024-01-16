@@ -16,7 +16,6 @@ void Player::Initialize()
 
 void Player::Update()
 {
-
 	Control();
 	Attack();
 
@@ -67,9 +66,6 @@ void Player::Control()
 
 	velocity_.x = joyLeftVector.x * 0.1f;
 	velocity_.y = joyLeftVector.y * 0.1f;
-
-
-
 
 	worldTransform_.translate.x += velocity_.x;
 	worldTransform_.translate.y += velocity_.y;
