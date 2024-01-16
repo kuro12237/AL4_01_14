@@ -4,6 +4,8 @@
 void Player::Initialize()
 {
 	modelHandle_ = ModelManager::LoadObjectFile("Player");
+	bulletModelHandle_ = ModelManager::LoadObjectFile("PlayerBullet");
+
 	gameObject_ = make_unique<Game3dObject>();
 	gameObject_->Create();
 	gameObject_->SetModel(modelHandle_);
@@ -16,32 +18,73 @@ void Player::Update()
 {
 
 	Control();
+	Attack();
 
 	worldTransform_.UpdateMatrix();
+	
+	for (shared_ptr<PlayerBullet>& bullet : bullets_)
+	{
+		bullet->Update();
+
+	}
 }
 
 void Player::Draw(ViewProjection view)
 {
+	for (shared_ptr<PlayerBullet>& bullet : bullets_)
+	{
+		bullet->Draw(view);
+
+	}
 	gameObject_->Draw(worldTransform_, view);
 }
 
 void Player::Control()
 {
-	Vector2 joyVector = Input::GetJoyLStickPos();
+	Vector2 joyLeftVector = Input::GetJoyLStickPos();
+	Vector2 joyRightVector = Input::GetJoyRStickPos();
 
-	if (joyVector.x <= 0.1f && joyVector.x >= -0.1f)
+	//LimitR
+	if (joyRightVector.x <= 0.1f && joyRightVector.x >= -0.1f)
 	{
-		joyVector.x = 0.0f;
+		joyRightVector.x = 0.0f;
+	}
+	if (joyRightVector.y <= 0.1f && joyRightVector.y >= -0.1f)
+	{
+		joyRightVector.y = 0.0f;
 	}
 
-	if (joyVector.y <= 0.1f && joyVector.y >= -0.1f)
+	//LimitL
+	if (joyLeftVector.x <= 0.1f && joyLeftVector.x >= -0.1f)
 	{
-		joyVector.y = 0.0f;
+		joyLeftVector.x = 0.0f;
+	}
+	if (joyLeftVector.y <= 0.1f && joyLeftVector.y >= -0.1f)
+	{
+		joyLeftVector.y = 0.0f;
 	}
 
-	velocity_.x = joyVector.x * 0.1f;
-	velocity_.y = joyVector.y * 0.1f;
+
+	velocity_.x = joyLeftVector.x * 0.1f;
+	velocity_.y = joyLeftVector.y * 0.1f;
+
+
+
 
 	worldTransform_.translate.x += velocity_.x;
 	worldTransform_.translate.y += velocity_.y;
+}
+
+void Player::Attack()
+{
+	if (Input::PushRShoulderPressed())
+	{
+		const float kbulletSpeed = 1.0f;
+		Vector3 velocity = { 0,0,kbulletSpeed };
+		velocity = VectorTransform::TransformNormal(velocity, worldTransform_.matWorld);
+
+		shared_ptr<PlayerBullet>bullet = make_shared<PlayerBullet>();
+		bullet->Initialize(bulletModelHandle_,worldTransform_.translate, velocity);
+		bullets_.push_back(bullet);
+	}
 }

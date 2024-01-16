@@ -133,6 +133,9 @@
     <Filter Include="Project\GameObject\Player">
       <UniqueIdentifier>{a2e97eac-857d-4cb7-bf0d-c541638fb98e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\SkyDome">
+      <UniqueIdentifier>{01057d84-5820-4eb7-84c7-5fe3a5430939}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -281,6 +284,10 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\Player\Player.cpp">
       <Filter>Project\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Player\PlayerBullet.cpp" />
+    <ClCompile Include="Project\GameObject\SkyDome\SkyDome.cpp">
+      <Filter>Project\GameObject\SkyDome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +479,12 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\Player\Player.h">
       <Filter>Project\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Player\PlayerBullet.h">
+      <Filter>Project\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\SkyDome\SkyDome.h">
+      <Filter>Project\GameObject\SkyDome</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

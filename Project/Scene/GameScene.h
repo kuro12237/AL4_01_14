@@ -4,6 +4,7 @@
 #include"Input.h"
 
 #include"GameObject/Player/Player.h"
+#include"GameObject/SkyDome/SkyDome.h"
 
 class GameScene :public IScene
 {
@@ -24,5 +25,5 @@ private:
 	ViewProjection viewProjection_ = {};
 
 	unique_ptr<Player>player_ = nullptr;
-	
+	unique_ptr<Skydome>skydome_ = nullptr;
 };
