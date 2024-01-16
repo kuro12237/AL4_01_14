@@ -139,6 +139,12 @@
     <Filter Include="Project\GameObject\enemy">
       <UniqueIdentifier>{ba80d679-7495-4556-abb8-7bac806c3a9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\Light">
+      <UniqueIdentifier>{fab81bca-5b9e-4656-b98d-ad84f2ca9966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Light\LeftLight">
+      <UniqueIdentifier>{dd087915-6a22-4d3f-b9fc-b192a91ee766}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -299,6 +305,15 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\Enemy\EnemyBullet.cpp">
       <Filter>Project\GameObject\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TestGround\TestGround.cpp">
+      <Filter>Project\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\CGScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TestLight\TestLeftLight.cpp">
+      <Filter>Project\GameObject\Light\LeftLight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +517,15 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\Enemy\EnemyBullet.h">
       <Filter>Project\GameObject\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TestGround\TestGround.h">
+      <Filter>Project\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\CGScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TestLight\TestLeftLight.h">
+      <Filter>Project\GameObject\Light\LeftLight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

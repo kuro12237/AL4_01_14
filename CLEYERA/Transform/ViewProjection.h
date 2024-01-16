@@ -36,7 +36,11 @@ struct ViewProjection {
 
 	void CreateBuffer();
 
+	void TransfarMatrix();
+
+private:
+
 	void Map();
 	void UnMap();
-	void TransfarMatrix();	
+	
 };
