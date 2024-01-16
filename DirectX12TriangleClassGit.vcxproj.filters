@@ -297,6 +297,9 @@
     <ClCompile Include="Project\GameObject\Player\PlayerBullet.cpp">
       <Filter>Project\GameObject\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\Enemy\EnemyBullet.cpp">
+      <Filter>Project\GameObject\enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -495,6 +498,9 @@
       <Filter>Project\GameObject\SkyDome</Filter>
     </ClInclude>
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
+      <Filter>Project\GameObject\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Enemy\EnemyBullet.h">
       <Filter>Project\GameObject\enemy</Filter>
     </ClInclude>
   </ItemGroup>

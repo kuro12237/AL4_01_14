@@ -22,6 +22,7 @@ void GameScene::Update(GameManager* Scene)
 
 	player_->Update();
 	skydome_->Update();
+
 	for (shared_ptr<Enemy>& enemy : enemys_)
 	{
 		enemy->Update();
@@ -37,10 +38,12 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 	player_->Draw(viewProjection_);
+
 	for (shared_ptr<Enemy>& enemy : enemys_)
 	{
 		enemy->Draw(viewProjection_);
 	}
+
 	skydome_->Draw(viewProjection_);
 }
 
