@@ -78,6 +78,8 @@
     <ClCompile Include="Project\GameObject\SkyDome\SkyDome.cpp" />
     <ClCompile Include="Project\GameObject\TestGround\TestGround.cpp" />
     <ClCompile Include="Project\GameObject\TestLight\TestLeftLight.cpp" />
+    <ClCompile Include="Project\GameObject\TestLight\TestRightLight.cpp" />
+    <ClCompile Include="Project\GameObject\TestSphere\TestSphere.cpp" />
     <ClCompile Include="Project\Scene\CGScene.cpp" />
     <ClCompile Include="Project\Scene\GameScene.cpp" />
   </ItemGroup>
@@ -149,6 +151,8 @@
     <ClInclude Include="Project\GameObject\SkyDome\SkyDome.h" />
     <ClInclude Include="Project\GameObject\TestGround\TestGround.h" />
     <ClInclude Include="Project\GameObject\TestLight\TestLeftLight.h" />
+    <ClInclude Include="Project\GameObject\TestLight\TestRightLight.h" />
+    <ClInclude Include="Project\GameObject\TestSphere\TestSphere.h" />
     <ClInclude Include="Project\Scene\CGScene.h" />
     <ClInclude Include="Project\Scene\GameScene.h" />
     <ClInclude Include="Project\Scene\IScene.h" />

@@ -145,6 +145,9 @@
     <Filter Include="Project\GameObject\Light\LeftLight">
       <UniqueIdentifier>{dd087915-6a22-4d3f-b9fc-b192a91ee766}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\Light\Right">
+      <UniqueIdentifier>{42e0dfbb-f1fd-4eae-8d26-dde6d7ab7e97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -315,6 +318,10 @@
     <ClCompile Include="Project\GameObject\TestLight\TestLeftLight.cpp">
       <Filter>Project\GameObject\Light\LeftLight</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\TestLight\TestRightLight.cpp">
+      <Filter>Project\GameObject\Light\Right</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TestSphere\TestSphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -526,6 +533,12 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\TestLight\TestLeftLight.h">
       <Filter>Project\GameObject\Light\LeftLight</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TestLight\TestRightLight.h">
+      <Filter>Project\GameObject\Light\Right</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TestSphere\TestSphere.h">
+      <Filter>Project\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
