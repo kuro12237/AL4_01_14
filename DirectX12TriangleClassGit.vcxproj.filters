@@ -148,6 +148,9 @@
     <Filter Include="Project\GameObject\Light\Right">
       <UniqueIdentifier>{42e0dfbb-f1fd-4eae-8d26-dde6d7ab7e97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\enemy\state">
+      <UniqueIdentifier>{4694874f-7b6b-47aa-92ea-597042659782}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -322,6 +325,12 @@
       <Filter>Project\GameObject\Light\Right</Filter>
     </ClCompile>
     <ClCompile Include="Project\GameObject\TestSphere\TestSphere.cpp" />
+    <ClCompile Include="Project\GameObject\Enemy\state\EnemyApprochState.cpp">
+      <Filter>Project\GameObject\enemy\state</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Enemy\state\EnemyLeaveState.cpp">
+      <Filter>Project\GameObject\enemy\state</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -539,6 +548,15 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\TestSphere\TestSphere.h">
       <Filter>Project\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Enemy\state\IEnemyState.h">
+      <Filter>Project\GameObject\enemy\state</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Enemy\state\EnemyApprochState.h">
+      <Filter>Project\GameObject\enemy\state</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Enemy\state\EnemyLeaveState.h">
+      <Filter>Project\GameObject\enemy\state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

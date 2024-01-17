@@ -5,7 +5,7 @@ GameManager::GameManager()
 	Cleyera::Initialize();
 
 	WinApp::SetTiTleName(L"CLEYERA");
-	Scene_ = new CGScene();
+	Scene_ = new GameScene();
 
 	Scene_->Initialize();
 }
@@ -22,7 +22,7 @@ void GameManager::Run()
 	{
 		Cleyera::BeginFlame();
 	
-		ImGui::Begin("CGTest");
+		//ImGui::Begin("CGTest");
 		
 		LightingManager::ClearList();
 		
@@ -30,7 +30,7 @@ void GameManager::Run()
 
 		LightingManager::TransfarBuffers();
 		
-		ImGui::End();
+		//ImGui::End();
 		
 		Scene_->Back2dSpriteDraw();
 		Scene_->Object3dDraw();

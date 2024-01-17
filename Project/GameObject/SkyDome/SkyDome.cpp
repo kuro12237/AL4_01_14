@@ -3,7 +3,7 @@
 void Skydome::Initialize()
 {
 
-	modelHandle_ = ModelManager::LoadObjectFile("skyDome");
+	modelHandle_ = ModelManager::LoadObjectFile("SkyDome");
 
 	gameObject_ = make_unique<Game3dObject>();
 	gameObject_->Create();
@@ -16,6 +16,7 @@ void Skydome::Initialize()
 
 void Skydome::Update()
 {
+	gameObject_->SetUvScale({ -1.0f,1.0f,1.0f });
 	worldTransform_.UpdateMatrix();
 
 }

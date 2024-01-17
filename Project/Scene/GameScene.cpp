@@ -13,20 +13,23 @@ void GameScene::Initialize()
 	skydome_->Initialize();
 	file = FileLoader::CSVLoadFile("Resources/EnemyPop.csv");
 	enemyHandle_ = ModelManager::LoadObjectFile("Enemy");
+
+	collisionManager_ = make_unique<CollisionManager>();
+
 }
 
 void GameScene::Update(GameManager* Scene)
 {
 	Scene;
-	EnemySpown();
+	EnemysUpdate();
 
 	player_->Update();
+
 	skydome_->Update();
 
-	for (shared_ptr<Enemy>& enemy : enemys_)
-	{
-		enemy->Update();
-	}
+	
+
+	Collision();
 
 	viewProjection_.UpdateMatrix();
 }
@@ -111,4 +114,45 @@ void GameScene::EnemyPop(Vector3 pos)
 	shared_ptr<Enemy>enemy = make_shared<Enemy>();
 	enemy->Initialize(pos,enemyHandle_);
 	enemys_.push_back(enemy);
+}
+
+void GameScene::EnemysUpdate()
+{
+	EnemySpown();
+
+	//enemykill
+	enemys_.remove_if([](shared_ptr<Enemy> enemy) {
+		if (enemy->GetIsDeadFlag()) {
+			enemy.reset();
+			return true;
+		}
+		return false;
+		});
+
+
+	for (shared_ptr<Enemy>& enemy : enemys_)
+	{
+		enemy->Update(player_.get());
+	}
+
+}
+
+void GameScene::Collision()
+{
+	collisionManager_->ClliderClear();
+
+	collisionManager_->ColliderOBBPushBack(player_.get());
+
+	for (shared_ptr<PlayerBullet>& bullet : player_->GetBullets_())
+	{
+		collisionManager_->ColliderOBBPushBack(bullet.get());
+    }
+
+	for (shared_ptr<Enemy>& enemy : enemys_)
+	{
+		collisionManager_->ColliderOBBPushBack(enemy.get());
+	}
+
+
+	collisionManager_->CheckAllCollision();
 }

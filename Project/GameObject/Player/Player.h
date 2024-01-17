@@ -3,8 +3,11 @@
 #include"Game3dObject.h"
 #include"Input.h"
 #include"PlayerBullet.h"
+#include"Collider/OBBCollider.h"
+#include"CollisionManager.h"
+#include"ColliderConfig.h"
 
-class Player
+class Player :public OBBCollider
 {
 public:
 	Player() {};
@@ -15,6 +18,13 @@ public:
 	void Update();
 
 	void Draw(ViewProjection view);
+
+
+	list<shared_ptr<PlayerBullet>>GetBullets_(){return bullets_; }
+
+	Vector3 GetWorldPosition()override;
+
+	void OnCollision(uint32_t id)override;
 
 private:
 

@@ -1,5 +1,6 @@
 #pragma once
 #include"Game3dObject.h"
+#include"GameObject/Player/Player.h"
 
 class EnemyBullet
 {
@@ -9,7 +10,7 @@ public:
 
 	void Initialize(Vector3 pos, Vector3 v);
 
-	void Update();
+	void Update(Player*player);
 
 	void Draw(ViewProjection view);
 

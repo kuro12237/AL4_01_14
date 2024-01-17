@@ -11,7 +11,8 @@ void Player::Initialize()
 	gameObject_->SetModel(modelHandle_);
 
 	worldTransform_.Initialize();
-
+	SetCollosionAttribute(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionMaskPlayer);
 }
 
 void Player::Update()
@@ -36,6 +37,21 @@ void Player::Draw(ViewProjection view)
 
 	}
 	gameObject_->Draw(worldTransform_, view);
+}
+
+Vector3 Player::GetWorldPosition()
+{
+	return Vector3(
+	worldTransform_.matWorld.m[3][0],
+	worldTransform_.matWorld.m[3][1],
+	worldTransform_.matWorld.m[3][2]
+	);
+}
+
+void Player::OnCollision(uint32_t id)
+{
+	id;
+
 }
 
 void Player::Control()

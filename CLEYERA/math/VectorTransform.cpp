@@ -85,7 +85,8 @@ float VectorTransform::Dot(const Vector3& v1, const Vector3& v2) {
 
 Vector3 VectorTransform::SlerpFanc(Vector3 start, Vector3 end, float t)
 {
-	float dot = start.x * end.x + start.y * end.y + start.z * end.z;
+	float dot = Dot(start,end);
+
 	float theta = std::acos(dot) * t;
 	Vector3 relative = { end.x - start.x * dot, end.y - start.y * dot, end.z - start.z * dot };
 	relative = Normalize(relative);

@@ -23,3 +23,18 @@ void PlayerBullet::Draw(ViewProjection view)
 {
 	gameObject_->Draw(worldTransoform_, view);
 }
+
+Vector3 PlayerBullet::GetWorldPosition()
+{
+	return Vector3(
+	worldTransoform_.matWorld.m[3][0],
+	worldTransoform_.matWorld.m[3][1],
+	worldTransoform_.matWorld.m[3][2]
+	);
+}
+
+void PlayerBullet::OnCollision(uint32_t id)
+{
+	id;
+	isDesdFlag = true;
+}

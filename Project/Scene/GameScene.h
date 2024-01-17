@@ -7,7 +7,7 @@
 #include"GameObject/SkyDome/SkyDome.h"
 #include"GameObject/Enemy/Enemy.h"
 #include"FileLoader.h"
-
+#include"CollisionManager.h"
 
 class GameScene :public IScene
 {
@@ -29,6 +29,10 @@ private:
 
 	void EnemyPop(Vector3 pos);
 
+	void EnemysUpdate();
+
+	void Collision();
+
 	ViewProjection viewProjection_ = {};
 
 	unique_ptr<Player>player_ = nullptr;
@@ -41,5 +45,7 @@ private:
 	bool EnemyWaitFlag_ = false;
 	int32_t WaitTimer_ = 0;
 	uint32_t enemyHandle_ = 0;
+
+	unique_ptr<CollisionManager>collisionManager_ = nullptr;
 
 };
