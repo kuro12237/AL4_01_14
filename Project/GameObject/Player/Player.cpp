@@ -140,8 +140,6 @@ void Player::Attack()
 		velocity.x *= kBulletSpeed;
 		velocity.y *= kBulletSpeed;
 		velocity.z *= kBulletSpeed;
-
-		// intealize
 		velocity = VectorTransform::TransformNormal(velocity, worldTransform_.matWorld);
 
 		shared_ptr<PlayerBullet>bullet = make_shared<PlayerBullet>();
