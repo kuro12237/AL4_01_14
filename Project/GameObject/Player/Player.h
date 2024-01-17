@@ -26,6 +26,8 @@ public:
 
 	void OnCollision(uint32_t id)override;
 
+	void SetParent(const WorldTransform* w) { worldTransform_.parent = w; }
+
 private:
 
 	void Control();

@@ -15,7 +15,9 @@ void GameScene::Initialize()
 	enemyHandle_ = ModelManager::LoadObjectFile("Enemy");
 
 	collisionManager_ = make_unique<CollisionManager>();
-
+	railCamera_ = make_unique<RailCamera>();
+	railCamera_->Initialize();
+	player_->SetParent(&railCamera_->GetWorldTransform());
 }
 
 void GameScene::Update(GameManager* Scene)
@@ -26,12 +28,15 @@ void GameScene::Update(GameManager* Scene)
 	player_->Update();
 
 	skydome_->Update();
-
+	railCamera_->Update();
 	
 
 	Collision();
 
-	viewProjection_.UpdateMatrix();
+	//viewProjection_.UpdateMatrix();
+	viewProjection_ = railCamera_->GetViewProjection();
+	//viewProjection_.UpdateMatrix();
+	viewProjection_.TransfarMatrix();
 }
 
 void GameScene::Back2dSpriteDraw()

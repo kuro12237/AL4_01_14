@@ -151,6 +151,9 @@
     <Filter Include="Project\GameObject\enemy\state">
       <UniqueIdentifier>{4694874f-7b6b-47aa-92ea-597042659782}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\railCamera">
+      <UniqueIdentifier>{f976f6bb-f4e6-42f1-9dd5-b2506bc560a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -330,6 +333,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\Enemy\state\EnemyLeaveState.cpp">
       <Filter>Project\GameObject\enemy\state</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\RailCamera\RailCamera.cpp">
+      <Filter>Project\GameObject\railCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,6 +563,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\Enemy\state\EnemyLeaveState.h">
       <Filter>Project\GameObject\enemy\state</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\RailCamera\RailCamera.h">
+      <Filter>Project\GameObject\railCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

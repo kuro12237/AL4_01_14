@@ -8,6 +8,7 @@
 #include"GameObject/Enemy/Enemy.h"
 #include"FileLoader.h"
 #include"CollisionManager.h"
+#include"GameObject/RailCamera/RailCamera.h"
 
 class GameScene :public IScene
 {
@@ -36,6 +37,7 @@ private:
 	ViewProjection viewProjection_ = {};
 
 	unique_ptr<Player>player_ = nullptr;
+	unique_ptr<RailCamera>railCamera_ = nullptr;
 	unique_ptr<Skydome>skydome_ = nullptr;
 
 	list<shared_ptr<Enemy>>enemys_ = {};
