@@ -7,12 +7,12 @@ public:
 	RailCamera() {};
 	~RailCamera() {};
 
-	void Initialize();
+	void Initialize(Vector3 pos);
 
 
 	void Update();
 
-	WorldTransform const &GetWorldTransform() { return worldTransform_; }
+	const WorldTransform &GetWorldTransform() const { return worldTransform_; }
 
 	ViewProjection GetViewProjection() { return viewProjection_; }
 

@@ -34,6 +34,7 @@ private:
 
 	void Collision();
 
+
 	ViewProjection viewProjection_ = {};
 
 	unique_ptr<Player>player_ = nullptr;
