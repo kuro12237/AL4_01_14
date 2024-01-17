@@ -6,6 +6,7 @@
 #include"Collider/OBBCollider.h"
 #include"CollisionManager.h"
 #include"ColliderConfig.h"
+#include"Sprite/Sprite.h"
 
 class Player :public OBBCollider
 {
@@ -19,6 +20,7 @@ public:
 
 	void Draw(ViewProjection view);
 
+	void FrontDraw(ViewProjection view);
 
 	list<shared_ptr<PlayerBullet>>GetBullets_(){return bullets_; }
 
@@ -46,4 +48,9 @@ private:
 	uint32_t bulletModelHandle_ = 0;
 	list<shared_ptr<PlayerBullet>>bullets_ = {};
 
+	Vector2 RJoyPos_{};
+
+	unique_ptr<Sprite>sprite_ = nullptr;
+	uint32_t reticleTexHandle_ = 0;
+	WorldTransform spriteWorldTransform_ = {};
 };

@@ -20,6 +20,15 @@ void Player::Initialize()
 	gameReticleObject_->Create();
 	gameReticleObject_->SetModel(modelHandle_);
 	gameReticleObject_->SetColor({ 1,0,0,1 });
+
+	reticleTexHandle_ = TextureManager::LoadTexture("Reticle.png");
+	sprite_ = make_unique<Sprite>();
+	sprite_->Initialize(new SpriteBoxState,{-32.0f,-32.0f});
+	sprite_->SetTexHandle(reticleTexHandle_);
+	
+
+	spriteWorldTransform_.Initialize();
+	spriteWorldTransform_.translate = { 640.0f,360.0f,0.0f };
 }
 
 void Player::Update(const ViewProjection& view)
@@ -28,6 +37,7 @@ void Player::Update(const ViewProjection& view)
 	Control();
 	Attack();
 	
+	spriteWorldTransform_.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
 	
 	for (shared_ptr<PlayerBullet>& bullet : bullets_)
@@ -44,8 +54,12 @@ void Player::Draw(ViewProjection view)
 		bullet->Draw(view);
 
 	}
-	gameReticleObject_->Draw(reticleWorldTransform_, view);
 	gameObject_->Draw(worldTransform_, view);
+}
+
+void Player::FrontDraw(ViewProjection view)
+{
+	sprite_->Draw(spriteWorldTransform_, view);
 }
 
 Vector3 Player::GetWorldPosition()
@@ -87,6 +101,14 @@ void Player::Control()
 	{
 		joyLeftVector.y = 0.0f;
 	}
+
+	//
+	RJoyPos_ = Input::GetJoyRStickPos();
+
+	Vector2 RVelocity{ RJoyPos_.x *= 5.0f,RJoyPos_.y *= -5.0f };
+
+	spriteWorldTransform_.translate.x += RVelocity.x;
+	spriteWorldTransform_.translate.y += RVelocity.y;
 
 
 	velocity_.x = joyLeftVector.x * 0.1f;
@@ -134,7 +156,6 @@ void Player::ReticleUpdate(const ViewProjection& view)
 	const float kDistancePlayerTo3DReticle = 50.0f;
 	Vector3 offset = { 0, 0, 1.0f };
 
-	Vector3 pos = GetWorldPosition();
 
 	offset = VectorTransform::TransformNormal(offset, worldTransform_.matWorld);
 	offset = VectorTransform::Normalize(offset);
@@ -142,21 +163,14 @@ void Player::ReticleUpdate(const ViewProjection& view)
 	offset.x *= kDistancePlayerTo3DReticle;
 	offset.y *= kDistancePlayerTo3DReticle;
 	offset.z *= kDistancePlayerTo3DReticle;
-	reticleWorldTransform_.translate.x = offset.x + pos.x;
-	reticleWorldTransform_.translate.y = offset.y + pos.y;
-	reticleWorldTransform_.translate.z = offset.z + pos.z;
 
-	Vector2 RJoyPos = Input::GetJoyRStickPos();
 
-	RJoyPos.x *= 5.0f;
-	RJoyPos.y *= 5.0f;
-	reticleWorldTransform_.translate.x += RJoyPos.x;
-	reticleWorldTransform_.translate.y += RJoyPos.y;
+	reticleWorldTransform_.translate = VectorTransform::Add(worldTransform_.translate, offset);
 
+
+	//座標変換
 	Matrix4x4 matViewport =
-		MatrixTransform::ViewportMatrix(0, 0, WinApp::GetkCilientWidth(), WinApp::GetkCilientHeight(), 0, 1);
-
-
+		MatrixTransform::ViewportMatrix(0.0f, 0.0f, float(WinApp::GetkCilientWidth()), float(WinApp::GetkCilientHeight()), 0.0f, 1.0f);
 
 	Matrix4x4 matVPV =
 		MatrixTransform::Multiply(view.matView_,
@@ -164,22 +178,28 @@ void Player::ReticleUpdate(const ViewProjection& view)
 
 	Matrix4x4 matInverseVPV = MatrixTransform::Inverse(matVPV);
 
-	matInverseVPV;
-
 	// スクリーン座標
-	/*Vector3 posNear = Vector3(
-		(float)sprite2DReticle_->GetPosition().x, (float)sprite2DReticle_->GetPosition().y, 0);
+	Vector3 posNear = Vector3(
+		(float)spriteWorldTransform_.translate.x, (float)spriteWorldTransform_.translate.y, 0);
 	Vector3 posFar = Vector3(
-		(float)sprite2DReticle_->GetPosition().x, (float)sprite2DReticle_->GetPosition().y, 1);
-	posNear = Transform(posNear, matInverseVPV);
-	posFar = Transform(posFar, matInverseVPV);*/
+		(float)spriteWorldTransform_.translate.x, (float)spriteWorldTransform_.translate.y, 1);
+	posNear = VectorTransform::TransformByMatrix(posNear, matInverseVPV);
+	posFar = VectorTransform::TransformByMatrix(posFar, matInverseVPV);
 
-	//Vector3 mouseDirection = Substract(posFar, posNear);
-	//mouseDirection = Normalize(mouseDirection);
+	Vector3 mouseDirection = VectorTransform::Subtruct(posFar, posNear);
+	mouseDirection = VectorTransform::Normalize(mouseDirection);
 
-	//const float kDistanceTestObject = 50.0f;
+	const float kDistanceTestObject = 50.0f;
 
-;
+	reticleWorldTransform_.translate.x = posNear.x + mouseDirection.x * kDistanceTestObject;
+	reticleWorldTransform_.translate.y = posNear.y + mouseDirection.y * kDistanceTestObject;
+	reticleWorldTransform_.translate.z = posNear.z + mouseDirection.z * kDistanceTestObject;
+	
+	reticleWorldTransform_.translate =
+		VectorTransform::Add(posNear,
+			VectorTransform::Multiply(
+				mouseDirection, { kDistanceTestObject,kDistanceTestObject,kDistanceTestObject })
+		);
 
 	reticleWorldTransform_.UpdateMatrix();
 }

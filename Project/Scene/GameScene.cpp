@@ -27,7 +27,7 @@ void GameScene::Update(GameManager* Scene)
 
 	railCamera_->Update();
 
-	player_->Update();
+	player_->Update(viewProjection_);
 
 	skydome_->Update();
 
@@ -56,6 +56,7 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
+	player_->FrontDraw(viewProjection_);
 }
 
 void GameScene::EnemySpown()
