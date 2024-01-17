@@ -22,9 +22,9 @@ void Player::Initialize()
 	gameReticleObject_->SetColor({ 1,0,0,1 });
 }
 
-void Player::Update()
+void Player::Update(const ViewProjection& view)
 {
-	ReticleUpdate();
+	ReticleUpdate(view);
 	Control();
 	Attack();
 	
@@ -128,7 +128,7 @@ void Player::Attack()
 	}
 }
 
-void Player::ReticleUpdate()
+void Player::ReticleUpdate(const ViewProjection& view)
 {
 	
 	const float kDistancePlayerTo3DReticle = 50.0f;
@@ -152,5 +152,34 @@ void Player::ReticleUpdate()
 	RJoyPos.y *= 5.0f;
 	reticleWorldTransform_.translate.x += RJoyPos.x;
 	reticleWorldTransform_.translate.y += RJoyPos.y;
+
+	Matrix4x4 matViewport =
+		MatrixTransform::ViewportMatrix(0, 0, WinApp::GetkCilientWidth(), WinApp::GetkCilientHeight(), 0, 1);
+
+
+
+	Matrix4x4 matVPV =
+		MatrixTransform::Multiply(view.matView_,
+			MatrixTransform::Multiply(view.matProjection_, matViewport));
+
+	Matrix4x4 matInverseVPV = MatrixTransform::Inverse(matVPV);
+
+	matInverseVPV;
+
+	// スクリーン座標
+	/*Vector3 posNear = Vector3(
+		(float)sprite2DReticle_->GetPosition().x, (float)sprite2DReticle_->GetPosition().y, 0);
+	Vector3 posFar = Vector3(
+		(float)sprite2DReticle_->GetPosition().x, (float)sprite2DReticle_->GetPosition().y, 1);
+	posNear = Transform(posNear, matInverseVPV);
+	posFar = Transform(posFar, matInverseVPV);*/
+
+	//Vector3 mouseDirection = Substract(posFar, posNear);
+	//mouseDirection = Normalize(mouseDirection);
+
+	//const float kDistanceTestObject = 50.0f;
+
+;
+
 	reticleWorldTransform_.UpdateMatrix();
 }

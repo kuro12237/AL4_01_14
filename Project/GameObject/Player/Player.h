@@ -15,7 +15,7 @@ public:
 
 	void Initialize();
 
-	void Update();
+	void Update(const ViewProjection &view);
 
 	void Draw(ViewProjection view);
 
@@ -33,7 +33,7 @@ private:
 	void Control();
 	void Attack();
 
-	void ReticleUpdate();
+	void ReticleUpdate(const ViewProjection& view);
 
 	uint32_t modelHandle_ = 0;
 	unique_ptr<Game3dObject>gameObject_ = nullptr;
