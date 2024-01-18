@@ -24,7 +24,7 @@ void RailCamera::Update() {
 
 	const uint32_t kSelection = 6;
 
-	if (targetSection_>=kSelection)
+	if (targetSection_ >= kSelection)
 	{
 		return;
 	}
