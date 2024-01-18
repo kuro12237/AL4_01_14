@@ -26,6 +26,7 @@ public:
 
 	static Vector3 TransformByMatrix(const Vector3 vector, const Matrix4x4 matrix);
 
+	static Vector3 Catmull_Rom(Vector3& p0, Vector3& p1, Vector3& p2, Vector3& p3, float t);
 
 private:
 
