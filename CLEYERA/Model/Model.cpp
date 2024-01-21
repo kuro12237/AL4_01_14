@@ -16,7 +16,8 @@ void Model::CreateModel(unique_ptr<IModelState> state, Vector4 CenterPos , float
 
 void Model::CreateLine(unique_ptr<IModelState> state,Vector4 StartPosition, Vector4 EndPosition, Vector4 Color)
 {
-	state_=move(state);
+	state;
+	state_ = make_unique<ModelLineState>();
 	StartPos_ = StartPosition;
 	EndPos_ = EndPosition;
 	color_ = Color;
@@ -30,7 +31,7 @@ void Model::SetModel(uint32_t handle)
 
 	if (prevModelHandle_ != modelHandle_)
 	{
-		state_=make_unique<ModelObjState>();
+		state_ = make_unique<ModelObjState>();
 		state_->Initialize(this);
 	}
 }
@@ -56,6 +57,12 @@ void Model::Draw(const ViewProjection& viewprojection)
 	}
 	
 	state_->Draw(this,viewprojection);
+}
+
+void Model::LineDraw(WorldTransform worldTransform, const ViewProjection view)
+{
+	worldTransform_ = worldTransform;
+	state_->Draw(this, view);
 }
 
 

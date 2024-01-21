@@ -57,6 +57,8 @@ public:
 	/// </summary>
 	void UseLight(bool flag) { this->uselight_ = flag; };
 
+	void LineDraw(WorldTransform worldTransform, const ViewProjection view);
+
 #pragma region Get
 
 	Vector4 GetColor() { return color_; }
@@ -85,6 +87,7 @@ public:
 	/// </summary>
 	float GetSize() { return size_; }
 
+	const WorldTransform GetWorldTransform() { return worldTransform_; }
 
 	bool GetUseLight(){return uselight_;}
 
@@ -116,5 +119,6 @@ private:
 	unique_ptr<IModelState> state_ = nullptr;
 	SModelData modelData_;
 
+	WorldTransform worldTransform_ = {};
 };
 

@@ -18,6 +18,7 @@ void GameScene::Initialize()
 	railCamera_ = make_unique<RailCamera>();
 	railCamera_->Initialize(player_->GetWorldPosition());
 	player_->SetParent(&railCamera_->GetWorldTransform());
+
 }
 
 void GameScene::Update(GameManager* Scene)
@@ -25,17 +26,17 @@ void GameScene::Update(GameManager* Scene)
 	Scene;
 	EnemysUpdate();
 
-	railCamera_->Update();
-
 	player_->Update(viewProjection_);
+	//railCamera_->Update();
 
 	skydome_->Update();
 
-
 	Collision();
 
+	viewProjection_.UpdateMatrix();
 	viewProjection_ = railCamera_->GetViewProjection();
 	viewProjection_.TransfarMatrix();
+
 }
 
 void GameScene::Back2dSpriteDraw()
@@ -44,13 +45,14 @@ void GameScene::Back2dSpriteDraw()
 
 void GameScene::Object3dDraw()
 {
+
+	//railCamera_->Draw(viewProjection_);
 	player_->Draw(viewProjection_);
 
 	for (shared_ptr<Enemy>& enemy : enemys_)
 	{
 		enemy->Draw(viewProjection_);
 	}
-
 	skydome_->Draw(viewProjection_);
 }
 

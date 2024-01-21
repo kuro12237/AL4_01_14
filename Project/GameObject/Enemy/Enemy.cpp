@@ -18,7 +18,7 @@ void Enemy::Initialize(Vector3 p,uint32_t modelHandle)
 
 void Enemy::Update(Player* player)
 {
-	attackTimer_++;
+	//attackTimer_++;
 
 	if (attackTimer_>attackTimerMax_)
 	{

@@ -36,10 +36,22 @@ void Player::Update(const ViewProjection& view)
 	ReticleUpdate(view);
 	Control();
 	Attack();
-	
+
+	ImGui::Begin("bulletSize");
+	ImGui::Text("%d",uint32_t(bullets_.size()));
+	ImGui::End();
+
 	spriteWorldTransform_.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
-	
+
+	bullets_.remove_if([](shared_ptr<PlayerBullet> bullet) {
+		if (bullet->GetIsDadFlag()) {
+			bullet.reset();
+			return true;
+		}
+		return false;
+		});
+
 	for (shared_ptr<PlayerBullet>& bullet : bullets_)
 	{
 		bullet->Update();
@@ -122,11 +134,11 @@ void Player::Control()
 
 void Player::Attack()
 {
-	if (Input::PushRShoulderPressed())
+	if (Input::PushRShoulder())
 	{
 		const float kbulletSpeed = 1.0f;
 		Vector3 velocity = { 0,0,kbulletSpeed };
-		
+
 		// BulletSpeed
 		const float kBulletSpeed = 1.0f;
 

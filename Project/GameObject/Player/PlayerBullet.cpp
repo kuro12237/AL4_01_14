@@ -14,8 +14,14 @@ void PlayerBullet::Initialize(uint32_t modelHandle,Vector3 p, Vector3 v)
 
 void PlayerBullet::Update()
 {
+	bulletTimer_ ++;
+
+	if (bulletTimer_>=kBulletTimer_)
+	{
+		isDesdFlag = true;
+	}
+
 	worldTransoform_.translate = VectorTransform::Add(worldTransoform_.translate, velocity_);
-	
 	worldTransoform_.UpdateMatrix();
 }
 
@@ -36,5 +42,5 @@ Vector3 PlayerBullet::GetWorldPosition()
 void PlayerBullet::OnCollision(uint32_t id)
 {
 	id;
-	isDesdFlag = true;
+	//isDesdFlag = true;
 }
