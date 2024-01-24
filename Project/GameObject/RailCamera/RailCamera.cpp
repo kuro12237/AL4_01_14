@@ -8,7 +8,7 @@ void RailCamera::Initialize(Vector3 pos)
 	viewProjection_.UpdateMatrix();
 
 	controlPoints_ = {
-		{0,  0,  0  },
+		{0,  0,  2  },
 		{0, 0, 4 },
 		{0, 0, 8 },
 		{0, 5, 16 },
@@ -41,12 +41,12 @@ void RailCamera::Initialize(Vector3 pos)
 
 // Catmull-Romスプライン補間関数
 Vector3 RailCamera::CatmullRomInterpolation(int index, float t) {
-	const uint32_t kSelection = uint32_t(controlPoints_.size() - 1);
+	const uint32_t kSelect = uint32_t(controlPoints_.size() - 1);
 	return VectorTransform::Catmull_Rom(
-		controlPoints_[(index - 1 + kSelection) % kSelection],
+		controlPoints_[(index - 1 + kSelect) % kSelect],
 		controlPoints_[index],
-		controlPoints_[(index + 1) % kSelection],
-		controlPoints_[(index + 2) % kSelection],
+		controlPoints_[(index + 1) % kSelect],
+		controlPoints_[(index + 2) % kSelect],
 		t
 	);
 }
@@ -70,10 +70,10 @@ void RailCamera::Update() {
 	eye_ = CatmullRomInterpolation(eyeSelect_, eyet_);
 	target_ = CatmullRomInterpolation(targetSelect_, targett_);
 
-	Vector3 rotate = (VectorTransform::Subtruct( eye_,target_));
+	Vector3 rotate = VectorTransform::Normalize(VectorTransform::Subtruct(target_, eye_));
 	//ワールドに変換
 	worldTransform_.translate = eye_;
-	
+
 	float velocityXZ = sqrt(rotate.x * rotate.x + rotate.z * rotate.z);
 	float heightY = -rotate.y;
 
@@ -114,16 +114,19 @@ void RailCamera::Draw(ViewProjection view)
 	}
 }
 
-void RailCamera::UpdateParameter(float& parameter, uint32_t& selctIndex)
+void RailCamera::UpdateParameter(float& param, uint32_t& selctIndex)
 {
-	const uint32_t kSelection = uint32_t(controlPoints_.size() - 1);
+	const uint32_t kSelect = uint32_t(controlPoints_.size() - 1);
 	const float kFlame = 480.0f;
 
-	if (selctIndex != kSelection) {
-		parameter += 1.0f / kFlame;
-		if (parameter >= 1.0f) {
-			parameter = 0.0f;
+	if (selctIndex != kSelect) 
+	{
+		param += 1.0f / kFlame;
+
+		if (param >= 1.0f) 
+		{
 			selctIndex++;
+			param = 0.0f;
 		}
 	}
 };

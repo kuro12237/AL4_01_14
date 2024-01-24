@@ -6,8 +6,9 @@
 #include"state/IEnemyState.h"
 #include"state/EnemyApprochState.h"
 #include"GameObject/Player/Player.h"
+#include"AABBCollider.h"
 
-class Enemy:public OBBCollider
+class Enemy:public AABBCollider
 {
 public:
 	Enemy() {};
@@ -30,6 +31,8 @@ public:
 	void SetWorldTranslate(Vector3 t) { worldTransform_.translate = t; }
 
 	void ChangeState(unique_ptr<IEnemyState> state);
+
+	list<shared_ptr<EnemyBullet>>GetBulletsList() { return bullets_; }
 
 private:
 

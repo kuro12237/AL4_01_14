@@ -10,8 +10,8 @@ void PlayerBullet::Initialize(uint32_t modelHandle,Vector3 p, Vector3 v)
 	worldTransoform_.translate = p;
 	worldTransoform_.UpdateMatrix();
 
-	OBBCollider::SetCollosionAttribute(kCollisionAttributePlayer);
-	OBBCollider::SetCollisionMask(kCollisionMaskPlayer);
+	SetCollosionAttribute(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionMaskPlayer);
 
 	velocity_ = v;
 	float velocityXZ = sqrt(velocity_.x * velocity_.x + velocity_.z * velocity_.z);

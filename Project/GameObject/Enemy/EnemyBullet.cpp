@@ -13,12 +13,19 @@ void EnemyBullet::Initialize(Vector3 pos,Vector3 v)
 	worldTransform_.translate = pos;
 	worldTransform_.UpdateMatrix();
 	velocity_ = v;
-
+	SetCollisionMask(kCollisionMaskEnemy);
+	SetCollosionAttribute(kCollisionAttributeEnemy);
 	//velocity_ = VectorTransform::Multiply(velocity_, { 10.0f,10.0f,10.0f });
 }
 
 void EnemyBullet::Update(Player*player)
 {
+	AliveTimer_++;
+	if (AliveTimer_>=kAliveTimer_)
+	{
+		isDeadFlag_ = true;
+	}
+
 	Vector3 PlayerPos = {};
 	PlayerPos = VectorTransform::Subtruct(player->GetWorldPosition(), worldTransform_.translate);
 
@@ -45,9 +52,15 @@ void EnemyBullet::Draw(ViewProjection view)
 
 Vector3 EnemyBullet::GetWorldPosition()
 {
-	return Vector3();
+	return Vector3(
+		worldTransform_.matWorld.m[3][0],
+		worldTransform_.matWorld.m[3][1],
+		worldTransform_.matWorld.m[3][2]
+	);
 }
 
 void EnemyBullet::OnCollision(uint32_t id)
 {
+	id;
+	isDeadFlag_ = true;
 }

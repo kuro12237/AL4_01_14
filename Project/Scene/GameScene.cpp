@@ -18,6 +18,11 @@ void GameScene::Initialize()
 	railCamera_ = make_unique<RailCamera>();
 	railCamera_->Initialize(player_->GetWorldPosition());
 	player_->SetParent(&railCamera_->GetWorldTransform());
+	railCameraSpriteON_ = make_unique<Sprite>();
+	railCameraSpriteON_->Initialize(new SpriteBoxState);
+	uint32_t tex = TextureManager::LoadTexture("RailCameraPushA.png");
+	railCameraSpriteON_->SetTexHandle(tex);
+	railCameraSpriteWorldTransform_.Initialize();
 }
 
 void GameScene::Update(GameManager* Scene)
@@ -28,21 +33,21 @@ void GameScene::Update(GameManager* Scene)
 
 	player_->Update(viewProjection_);
 
-	ImGui::Begin("pos");
-	
-	ImGui::End();
 	skydome_->Update();
-	railCamera_->Update();
+	if (Input::PushBottonPressed(XINPUT_GAMEPAD_A))
+	{
+		RailCameraOnFlag_ = true;
+	}
 
-	//player_->SetEyeTraget(railCamera_->GetEye(), railCamera_->GetTarget());
-	
+	if (RailCameraOnFlag_)
+	{
+		railCamera_->Update();
+	}
 	Collision();
-
 
 	viewProjection_.matView_ = railCamera_->GetViewProjection().matView_;
 	viewProjection_.matProjection_ = railCamera_->GetViewProjection().matProjection_;
-	//viewProjection_.UpdateMatrix();
-
+	railCameraSpriteWorldTransform_.UpdateMatrix();
 	viewProjection_.TransfarMatrix();
 }
 
@@ -53,7 +58,7 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 
-	railCamera_->Draw(viewProjection_);
+	//railCamera_->Draw(viewProjection_);
 	player_->Draw(viewProjection_);
 
 	for (shared_ptr<Enemy>& enemy : enemys_)
@@ -65,6 +70,7 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
+	railCameraSpriteON_->Draw(railCameraSpriteWorldTransform_, viewProjection_);
 	player_->FrontDraw(viewProjection_);
 }
 
@@ -154,20 +160,23 @@ void GameScene::Collision()
 {
 	collisionManager_->ClliderClear();
 
-	collisionManager_->ColliderOBBPushBack(player_.get());
+	collisionManager_->ColliderAABBPushBack(player_.get());
 	//playerと当たっている可能性あり
 
 	for (shared_ptr<PlayerBullet>& bullet : player_->GetBullets_())
 	{
-		collisionManager_->ColliderOBBPushBack(bullet.get());
+		collisionManager_->ColliderAABBPushBack(bullet.get());
     }
 
 	for (shared_ptr<Enemy>& enemy : enemys_)
 	{
-		collisionManager_->ColliderOBBPushBack(enemy.get());
+		collisionManager_->ColliderAABBPushBack(enemy.get());
+
+		for (shared_ptr<EnemyBullet>& bullet : enemy->GetBulletsList())
+		{
+			collisionManager_->ColliderAABBPushBack(bullet.get());
+		}
 	}
-
-
 	collisionManager_->CheckAllCollision();
 }
 

@@ -7,8 +7,9 @@
 #include"CollisionManager.h"
 #include"ColliderConfig.h"
 #include"Sprite/Sprite.h"
+#include"AABBCollider.h"
 
-class Player :public OBBCollider
+class Player :public AABBCollider
 {
 public:
 	Player() {};
@@ -28,7 +29,8 @@ public:
 
 	void OnCollision(uint32_t id)override;
 
-	void SetParent(const WorldTransform* w) { worldTransform_.parent = w; }
+	void SetParent(const WorldTransform* w) { worldTransform_.parent = w;}
+	
 	void SetReticleParent(const WorldTransform* w) { reticleWorldTransform_.parent = w; }
 
 	void SetEyeTraget(Vector3 e, Vector3 t) { eye_ = e;  target_ = t; }
@@ -59,4 +61,7 @@ private:
 
 	Vector3 eye_ = {};
 	Vector3 target_ = {};
+
+	unique_ptr<Game3dObject>wingObject_ = nullptr;
+	WorldTransform wingWorldTransform_ = {};
 };

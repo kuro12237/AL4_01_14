@@ -8,7 +8,7 @@ void EnemeyApprochState::Update(Enemy* state)
 
 	state->SetWorldTranslate(translate_);
 
-	if (translate_.z < 15.0f)
+	if (translate_.z < 32.0f)
 	{
 		state->ChangeState(make_unique<EnemyLeaveState>());
 	}

@@ -2,7 +2,8 @@
 #include"Game3dObject.h"
 #include"OBBCollider.h"
 #include"ColliderConfig.h"
-class PlayerBullet:public OBBCollider
+#include"AABBCollider.h"
+class PlayerBullet:public AABBCollider
 {
 public:
 	PlayerBullet() {};

@@ -18,7 +18,14 @@ void Enemy::Initialize(Vector3 p,uint32_t modelHandle)
 
 void Enemy::Update(Player* player)
 {
-	//attackTimer_++;
+	bullets_.remove_if([](shared_ptr<EnemyBullet> bullet) {
+		if (bullet->GetIsDeadFlag()) {
+			bullet.reset();
+			return true;
+		}
+		return false;
+		});
+	attackTimer_++;
 
 	if (attackTimer_>attackTimerMax_)
 	{

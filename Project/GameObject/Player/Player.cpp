@@ -30,6 +30,13 @@ void Player::Initialize()
 	reticleWorldTransform_.translate.z += 10.0f;
 	spriteWorldTransform_.Initialize();
 	spriteWorldTransform_.translate = { 640.0f,360.0f,0.0f };
+	uint32_t wingModelHandle = ModelManager::LoadObjectFile("PlayerWing");
+	wingObject_ = make_unique<Game3dObject>();
+	wingObject_->Create();
+	wingObject_->SetModel(wingModelHandle);
+	wingWorldTransform_.Initialize();
+	wingWorldTransform_.parent = &worldTransform_;
+	wingWorldTransform_.scale = { 5,5,5 };
 }
 
 void Player::Update(const ViewProjection& view)
@@ -38,7 +45,7 @@ void Player::Update(const ViewProjection& view)
 	Control();
 	Attack();
 	ReticleUpdate(view);
-
+	wingWorldTransform_.rotation.y += 0.05f;
 
 	for (shared_ptr<PlayerBullet>& bullet : bullets_)
 	{
@@ -46,16 +53,9 @@ void Player::Update(const ViewProjection& view)
 
 	}
 
-	ImGui::Begin("bulletSize");
-	ImGui::Text("%d", uint32_t(bullets_.size()));
-	ImGui::End();
-
-	ImGui::Begin("Reticle");
-	ImGui::Text("%f,%f,%f", reticleWorldTransform_.matWorld.m[3][0], reticleWorldTransform_.matWorld.m[3][1], reticleWorldTransform_.matWorld.m[3][2]);
-	ImGui::End();
 	spriteWorldTransform_.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
-
+	wingWorldTransform_.UpdateMatrix();
 	bullets_.remove_if([](shared_ptr<PlayerBullet> bullet) {
 		if (bullet->GetIsDadFlag()) {
 			bullet.reset();
@@ -72,8 +72,8 @@ void Player::Draw(ViewProjection view)
 		bullet->Draw(view);
 
 	}
+	wingObject_->Draw(wingWorldTransform_, view);
 	gameObject_->Draw(worldTransform_, view);
-	gameReticleObject_->Draw(reticleWorldTransform_, view);
 }
 
 void Player::FrontDraw(ViewProjection view)
