@@ -5,7 +5,7 @@ void GameScene::Initialize()
 
 	viewProjection_.Initialize({ 0.0f,0.0f,0.0f }, { 0.0f,2.0f,-32.0f });
 	viewProjection_.UpdateMatrix();
-	
+
 	player_ = make_unique<Player>();
 	player_->Initialize();
 
@@ -18,25 +18,32 @@ void GameScene::Initialize()
 	railCamera_ = make_unique<RailCamera>();
 	railCamera_->Initialize(player_->GetWorldPosition());
 	player_->SetParent(&railCamera_->GetWorldTransform());
-
 }
 
 void GameScene::Update(GameManager* Scene)
 {
 	Scene;
+
 	EnemysUpdate();
 
 	player_->Update(viewProjection_);
-	//railCamera_->Update();
 
+	ImGui::Begin("pos");
+	
+	ImGui::End();
 	skydome_->Update();
+	railCamera_->Update();
 
+	//player_->SetEyeTraget(railCamera_->GetEye(), railCamera_->GetTarget());
+	
 	Collision();
 
-	viewProjection_.UpdateMatrix();
-	viewProjection_ = railCamera_->GetViewProjection();
-	viewProjection_.TransfarMatrix();
 
+	viewProjection_.matView_ = railCamera_->GetViewProjection().matView_;
+	viewProjection_.matProjection_ = railCamera_->GetViewProjection().matProjection_;
+	//viewProjection_.UpdateMatrix();
+
+	viewProjection_.TransfarMatrix();
 }
 
 void GameScene::Back2dSpriteDraw()
@@ -46,7 +53,7 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 
-	//railCamera_->Draw(viewProjection_);
+	railCamera_->Draw(viewProjection_);
 	player_->Draw(viewProjection_);
 
 	for (shared_ptr<Enemy>& enemy : enemys_)
@@ -110,7 +117,6 @@ void GameScene::EnemySpown()
 			WaitTimer_ = waitTimer;
 
 			break;
-	
 		}
 
 	}
@@ -149,6 +155,7 @@ void GameScene::Collision()
 	collisionManager_->ClliderClear();
 
 	collisionManager_->ColliderOBBPushBack(player_.get());
+	//playerと当たっている可能性あり
 
 	for (shared_ptr<PlayerBullet>& bullet : player_->GetBullets_())
 	{

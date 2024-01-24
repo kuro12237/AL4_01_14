@@ -9,14 +9,14 @@ void RailCamera::Initialize(Vector3 pos)
 
 	controlPoints_ = {
 		{0,  0,  0  },
-		{4, 5, 8 },
-		{8, 10, 16 },
-		{12, 5, 16 },
-		{16, 0,  16},
-		{12, 5, 12 },
-		{8, 10, 10},
-		{-20,5,-10},
-		{-10,0,5}
+		{0, 0, 4 },
+		{0, 0, 8 },
+		{0, 5, 16 },
+		{0, 0,  32},
+		{0, 5, 64 },
+		{0, 10, 96},
+		{-0,5,128},
+		{-0,0,0}
 	};
 
 	uint32_t modelHandle = ModelManager::LoadObjectFile("controlPoint");
@@ -24,7 +24,7 @@ void RailCamera::Initialize(Vector3 pos)
 	gameobj_ = make_shared<Game3dObject>();
 	gameobj_->Create();
 	gameobj_->SetModel(modelHandle);
-
+	gameobj_->SetColor({ 1,0,0,1 });
 	for (int i = 0; i < controlPoints_.size(); i++)
 	{
 		const float scale = 0.01f;
@@ -70,21 +70,29 @@ void RailCamera::Update() {
 	eye_ = CatmullRomInterpolation(eyeSelect_, eyet_);
 	target_ = CatmullRomInterpolation(targetSelect_, targett_);
 
-	Vector3 rotate = VectorTransform::Normalize(VectorTransform::Subtruct(target_, eye_));
+	Vector3 rotate = (VectorTransform::Subtruct( eye_,target_));
 	//ワールドに変換
 	worldTransform_.translate = eye_;
-	worldTransform_.rotation.y = atan2(rotate.x, rotate.z);
-	float roateLength = VectorTransform::Length({ rotate.x, 0, rotate.z });
-	worldTransform_.rotation.x = atan2(-rotate.y, roateLength);
+	
+	float velocityXZ = sqrt(rotate.x * rotate.x + rotate.z * rotate.z);
+	float heightY = -rotate.y;
+
+	worldTransform_.rotation.y = std::atan2(rotate.x, rotate.z);
+	worldTransform_.rotation.x = std::atan2(heightY, velocityXZ);
 
 	worldTransform_.matWorld = MatrixTransform::AffineMatrix(
 		worldTransform_.scale, worldTransform_.rotation, worldTransform_.translate);
+	Matrix4x4 rx = MatrixTransform::RotateXMatrix(worldTransform_.rotation.x);
+	Matrix4x4 ry = MatrixTransform::RotateXMatrix(worldTransform_.rotation.y);
+	Matrix4x4 rz = MatrixTransform::RotateXMatrix(worldTransform_.rotation.z);
+
+	Matrix4x4 rXYZ = MatrixTransform::RotateXYZMatrix(worldTransform_.rotation.y, -worldTransform_.rotation.x, worldTransform_.rotation.z);
+	Matrix4x4 S = MatrixTransform::ScaleMatrix(worldTransform_.scale);
+	Matrix4x4 T = MatrixTransform::TranslateMatrix(worldTransform_.translate);
+
+	worldTransform_.matWorld = MatrixTransform::Multiply(S, MatrixTransform::Multiply(rXYZ, T));
+
 	//viewに変換
-	viewProjection_.UpdateMatrix();
-	viewProjection_.matView_ = CreateView(target_, eye_);
-
-	viewProjection_.TransfarMatrix();
-
 	for (int i = 0; i < pointWorldTransforms_.size(); i++)
 	{
 		pointWorldTransforms_[i].matWorld=MatrixTransform::AffineMatrix(
@@ -92,13 +100,8 @@ void RailCamera::Update() {
 		pointWorldTransforms_[i].TransfarMatrix();
 	}
 
-	ImGui::Begin("Camera");
-	ImGui::DragFloat3("translate", &worldTransform_.translate.x, 0.01f);
-	ImGui::DragFloat3("rotate", &worldTransform_.rotation.x, 0.01f);
-	ImGui::Text("%d", controlPoints_.size());
-	ImGui::Text("eyeSelect :: %d targetSelect :: %d", eyeSelect_, targetSelect_);
-	ImGui::End();
-
+	viewProjection_.matView_ = MatrixTransform::Inverse(worldTransform_.matWorld);
+	worldTransform_.ParentUpdate();
 }
 
 void RailCamera::Draw(ViewProjection view)
@@ -109,40 +112,8 @@ void RailCamera::Draw(ViewProjection view)
 		pointGameObjects_[i]->Draw(pointWorldTransforms_[c], view);
 		c++;
 	}
-
 }
 
-Matrix4x4 RailCamera::CreateView(Vector3 target, Vector3 eye)
-{
-	Vector3 z = VectorTransform::Subtruct(target, eye);
-	z = VectorTransform::Normalize(z);
-	//xの外積
-	Vector3 x = VectorTransform::Cross({ 0.0f, 1.0f, 0.0f }, z);
-	x = VectorTransform::Normalize(x);
-	//yの外積
-	Vector3 y = VectorTransform::Cross(z, x);
-	y = VectorTransform::Normalize(y);
-
-	//view行列の作成
-	Matrix4x4 matrix = MatrixTransform::Identity();;
-	matrix.m[0][0] = x.x;
-	matrix.m[0][1] = y.x;
-	matrix.m[0][2] = z.x;
-
-	matrix.m[1][0] = x.y;
-	matrix.m[1][1] = y.y;
-	matrix.m[1][2] = z.y;
-
-	matrix.m[2][0] = x.z;
-	matrix.m[2][1] = y.z;
-	matrix.m[2][2] = z.z;
-
-	matrix.m[3][0] = -VectorTransform::Dot(eye_, x);
-	matrix.m[3][1] = -VectorTransform::Dot(eye_, y);
-	matrix.m[3][2] = -VectorTransform::Dot(eye_, z);
-
-	return matrix;
-}
 void RailCamera::UpdateParameter(float& parameter, uint32_t& selctIndex)
 {
 	const uint32_t kSelection = uint32_t(controlPoints_.size() - 1);

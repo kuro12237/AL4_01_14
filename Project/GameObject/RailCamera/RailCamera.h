@@ -9,7 +9,6 @@ public:
 
 	void Initialize(Vector3 pos);
 
-
 	void Update();
 
 	void Draw(ViewProjection view);
@@ -17,7 +16,10 @@ public:
 	const WorldTransform &GetWorldTransform() const { return worldTransform_; }
 
 	ViewProjection GetViewProjection() { return viewProjection_; }
+	Vector3 GetEye() { return eye_; }
 
+	Vector3 GetTarget(){ return target_; 
+	}
 private:
 
 	ViewProjection viewProjection_ = {};

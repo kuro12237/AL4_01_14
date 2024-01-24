@@ -39,7 +39,7 @@ private:
 	list<shared_ptr<EnemyBullet>>bullets_;
 
 	uint32_t attackTimer_ = 0;
-	const uint32_t attackTimerMax_ = 180;
+	const uint32_t attackTimerMax_ = 20;
 
 	bool isDeadFlag_ = false;
 

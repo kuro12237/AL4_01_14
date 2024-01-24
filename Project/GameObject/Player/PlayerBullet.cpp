@@ -5,11 +5,21 @@ void PlayerBullet::Initialize(uint32_t modelHandle,Vector3 p, Vector3 v)
 	gameObject_ = make_unique<Game3dObject>();
 	gameObject_->Create();
 	gameObject_->SetModel(modelHandle);
-	
+
 	worldTransoform_.Initialize();
 	worldTransoform_.translate = p;
 	worldTransoform_.UpdateMatrix();
+
+	OBBCollider::SetCollosionAttribute(kCollisionAttributePlayer);
+	OBBCollider::SetCollisionMask(kCollisionMaskPlayer);
+
 	velocity_ = v;
+	float velocityXZ = sqrt(velocity_.x * velocity_.x + velocity_.z * velocity_.z);
+	float heightY = -velocity_.y;
+
+	worldTransoform_.rotation.y = std::atan2(velocity_.x, velocity_.z);
+	worldTransoform_.rotation.x = std::atan2(heightY, velocityXZ);
+
 }
 
 void PlayerBullet::Update()
@@ -42,5 +52,5 @@ Vector3 PlayerBullet::GetWorldPosition()
 void PlayerBullet::OnCollision(uint32_t id)
 {
 	id;
-	//isDesdFlag = true;
+	isDesdFlag = true;
 }

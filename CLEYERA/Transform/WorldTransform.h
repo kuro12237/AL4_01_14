@@ -33,7 +33,8 @@ struct WorldTransform
 	void Initialize();
 	void SRTSetting(Vector3 s = { 1,1,1 }, Vector3 r = { 0,0,0 }, Vector3 t = {0,0,0});
 	void UpdateMatrix();
-  
+	void ParentUpdate();
+
 	void CreateBuffer();
 	void Map();
 	void UnMap();

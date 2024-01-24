@@ -25,22 +25,34 @@ void Player::Initialize()
 	sprite_ = make_unique<Sprite>();
 	sprite_->Initialize(new SpriteBoxState,{-32.0f,-32.0f});
 	sprite_->SetTexHandle(reticleTexHandle_);
-	
 
+	//reticleWorldTransform_.parent = &worldTransform_;
+	reticleWorldTransform_.translate.z += 10.0f;
 	spriteWorldTransform_.Initialize();
 	spriteWorldTransform_.translate = { 640.0f,360.0f,0.0f };
 }
 
 void Player::Update(const ViewProjection& view)
 {
-	ReticleUpdate(view);
+	gameObject_->SetColor({ 1,1,1,1 });
 	Control();
 	Attack();
+	ReticleUpdate(view);
+
+
+	for (shared_ptr<PlayerBullet>& bullet : bullets_)
+	{
+		bullet->Update();
+
+	}
 
 	ImGui::Begin("bulletSize");
-	ImGui::Text("%d",uint32_t(bullets_.size()));
+	ImGui::Text("%d", uint32_t(bullets_.size()));
 	ImGui::End();
 
+	ImGui::Begin("Reticle");
+	ImGui::Text("%f,%f,%f", reticleWorldTransform_.matWorld.m[3][0], reticleWorldTransform_.matWorld.m[3][1], reticleWorldTransform_.matWorld.m[3][2]);
+	ImGui::End();
 	spriteWorldTransform_.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
 
@@ -51,12 +63,6 @@ void Player::Update(const ViewProjection& view)
 		}
 		return false;
 		});
-
-	for (shared_ptr<PlayerBullet>& bullet : bullets_)
-	{
-		bullet->Update();
-
-	}
 }
 
 void Player::Draw(ViewProjection view)
@@ -67,6 +73,7 @@ void Player::Draw(ViewProjection view)
 
 	}
 	gameObject_->Draw(worldTransform_, view);
+	gameReticleObject_->Draw(reticleWorldTransform_, view);
 }
 
 void Player::FrontDraw(ViewProjection view)
@@ -86,7 +93,7 @@ Vector3 Player::GetWorldPosition()
 void Player::OnCollision(uint32_t id)
 {
 	id;
-
+	gameObject_->SetColor({ 1,0,0,1 });
 }
 
 void Player::Control()
@@ -114,27 +121,17 @@ void Player::Control()
 		joyLeftVector.y = 0.0f;
 	}
 
-	//
-	RJoyPos_ = Input::GetJoyRStickPos();
-
-	Vector2 RVelocity{ RJoyPos_.x *= 5.0f,RJoyPos_.y *= -5.0f };
-
-	spriteWorldTransform_.translate.x += RVelocity.x;
-	spriteWorldTransform_.translate.y += RVelocity.y;
-
-
 	velocity_.x = joyLeftVector.x * 0.1f;
 	velocity_.y = joyLeftVector.y * 0.1f;
 
 	worldTransform_.translate.x += velocity_.x;
 	worldTransform_.translate.y += velocity_.y;
-
-	
+	reticleWorldTransform_.UpdateMatrix();
 }
 
 void Player::Attack()
 {
-	if (Input::PushRShoulder())
+	if (Input::PushRShoulderPressed())
 	{
 		const float kbulletSpeed = 1.0f;
 		Vector3 velocity = { 0,0,kbulletSpeed };
@@ -152,7 +149,7 @@ void Player::Attack()
 		velocity.x *= kBulletSpeed;
 		velocity.y *= kBulletSpeed;
 		velocity.z *= kBulletSpeed;
-		velocity = VectorTransform::TransformNormal(velocity, worldTransform_.matWorld);
+		velocity = VectorTransform::TransformNormal(velocity,reticleWorldTransform_.matWorld);
 
 		shared_ptr<PlayerBullet>bullet = make_shared<PlayerBullet>();
 		bullet->Initialize(bulletModelHandle_,GetWorldPosition(), velocity);
@@ -162,10 +159,13 @@ void Player::Attack()
 
 void Player::ReticleUpdate(const ViewProjection& view)
 {
-	
 	const float kDistancePlayerTo3DReticle = 50.0f;
 	Vector3 offset = { 0, 0, 1.0f };
 
+	Vector3 pos;
+	pos.x = worldTransform_.matWorld.m[3][0];
+	pos.y = worldTransform_.matWorld.m[3][1];
+	pos.z = worldTransform_.matWorld.m[3][2];
 
 	offset = VectorTransform::TransformNormal(offset, worldTransform_.matWorld);
 	offset = VectorTransform::Normalize(offset);
@@ -173,10 +173,20 @@ void Player::ReticleUpdate(const ViewProjection& view)
 	offset.x *= kDistancePlayerTo3DReticle;
 	offset.y *= kDistancePlayerTo3DReticle;
 	offset.z *= kDistancePlayerTo3DReticle;
+	reticleWorldTransform_.translate.x = offset.x + pos.x;
+	reticleWorldTransform_.translate.y = offset.y + pos.y;
+	reticleWorldTransform_.translate.z = offset.z + pos.z;
+	reticleWorldTransform_.UpdateMatrix();
+	
+	//コントロール
+	RJoyPos_ = Input::GetJoyRStickPos();
+	Vector2 RVelocity{ RJoyPos_.x ,RJoyPos_.y };
+	SpritePos_.x = SpritePos_.x + RVelocity.x*5;
+	SpritePos_.y = SpritePos_.y - RVelocity.y*5;
 
-
-	reticleWorldTransform_.translate = VectorTransform::Add(worldTransform_.translate, offset);
-
+	spriteWorldTransform_.translate.x = SpritePos_.x;
+	spriteWorldTransform_.translate.y = SpritePos_.y;
+	spriteWorldTransform_.UpdateMatrix();
 
 	//座標変換
 	Matrix4x4 matViewport =
@@ -185,31 +195,26 @@ void Player::ReticleUpdate(const ViewProjection& view)
 	Matrix4x4 matVPV =
 		MatrixTransform::Multiply(view.matView_,
 			MatrixTransform::Multiply(view.matProjection_, matViewport));
-
 	Matrix4x4 matInverseVPV = MatrixTransform::Inverse(matVPV);
 
 	// スクリーン座標
 	Vector3 posNear = Vector3(
-		(float)spriteWorldTransform_.translate.x, (float)spriteWorldTransform_.translate.y, 0);
+		SpritePos_.x, SpritePos_.y, 0);
 	Vector3 posFar = Vector3(
-		(float)spriteWorldTransform_.translate.x, (float)spriteWorldTransform_.translate.y, 1);
+		SpritePos_.x, SpritePos_.y, 1);
+
 	posNear = VectorTransform::TransformByMatrix(posNear, matInverseVPV);
 	posFar = VectorTransform::TransformByMatrix(posFar, matInverseVPV);
 
 	Vector3 mouseDirection = VectorTransform::Subtruct(posFar, posNear);
 	mouseDirection = VectorTransform::Normalize(mouseDirection);
+	const float kDistanceTestObject = -50.0f;
 
-	const float kDistanceTestObject = 50.0f;
-
-	reticleWorldTransform_.translate.x = posNear.x + mouseDirection.x * kDistanceTestObject;
-	reticleWorldTransform_.translate.y = posNear.y + mouseDirection.y * kDistanceTestObject;
-	reticleWorldTransform_.translate.z = posNear.z + mouseDirection.z * kDistanceTestObject;
-	
-	reticleWorldTransform_.translate =
-		VectorTransform::Add(posNear,
-			VectorTransform::Multiply(
-				mouseDirection, { kDistanceTestObject,kDistanceTestObject,kDistanceTestObject })
-		);
-
+	reticleWorldTransform_.translate.x = posNear.x - mouseDirection.x *kDistanceTestObject;
+	reticleWorldTransform_.translate.y = posNear.y - mouseDirection.y *kDistanceTestObject;
+	reticleWorldTransform_.translate.z = posNear.z - mouseDirection.z *kDistanceTestObject;
 	reticleWorldTransform_.UpdateMatrix();
+	reticleWorldTransform_.TransfarMatrix();
 }
+
+

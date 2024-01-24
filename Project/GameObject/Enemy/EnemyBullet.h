@@ -2,7 +2,7 @@
 #include"Game3dObject.h"
 #include"GameObject/Player/Player.h"
 
-class EnemyBullet
+class EnemyBullet:public OBBCollider
 {
 public:
 	EnemyBullet() {};
@@ -13,6 +13,10 @@ public:
 	void Update(Player*player);
 
 	void Draw(ViewProjection view);
+
+	Vector3 GetWorldPosition()override;
+
+	void OnCollision(uint32_t id)override;
 
 private:
 

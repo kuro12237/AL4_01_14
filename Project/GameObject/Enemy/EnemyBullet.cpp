@@ -13,6 +13,7 @@ void EnemyBullet::Initialize(Vector3 pos,Vector3 v)
 	worldTransform_.translate = pos;
 	worldTransform_.UpdateMatrix();
 	velocity_ = v;
+
 	//velocity_ = VectorTransform::Multiply(velocity_, { 10.0f,10.0f,10.0f });
 }
 
@@ -40,4 +41,13 @@ void EnemyBullet::Update(Player*player)
 void EnemyBullet::Draw(ViewProjection view)
 {
 	gameObject_->Draw(worldTransform_, view);
+}
+
+Vector3 EnemyBullet::GetWorldPosition()
+{
+	return Vector3();
+}
+
+void EnemyBullet::OnCollision(uint32_t id)
+{
 }

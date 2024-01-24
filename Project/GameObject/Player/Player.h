@@ -16,19 +16,22 @@ public:
 
 	void Initialize();
 
-	void Update(const ViewProjection &view);
+	void Update(const ViewProjection& view);
 
 	void Draw(ViewProjection view);
 
 	void FrontDraw(ViewProjection view);
 
-	list<shared_ptr<PlayerBullet>>GetBullets_(){return bullets_; }
+	list<shared_ptr<PlayerBullet>>GetBullets_() { return bullets_; }
 
 	Vector3 GetWorldPosition()override;
 
 	void OnCollision(uint32_t id)override;
 
 	void SetParent(const WorldTransform* w) { worldTransform_.parent = w; }
+	void SetReticleParent(const WorldTransform* w) { reticleWorldTransform_.parent = w; }
+
+	void SetEyeTraget(Vector3 e, Vector3 t) { eye_ = e;  target_ = t; }
 
 private:
 
@@ -49,8 +52,11 @@ private:
 	list<shared_ptr<PlayerBullet>>bullets_ = {};
 
 	Vector2 RJoyPos_{};
-
+	Vector2 SpritePos_ = {640.0f,360.0f};
 	unique_ptr<Sprite>sprite_ = nullptr;
 	uint32_t reticleTexHandle_ = 0;
 	WorldTransform spriteWorldTransform_ = {};
+
+	Vector3 eye_ = {};
+	Vector3 target_ = {};
 };

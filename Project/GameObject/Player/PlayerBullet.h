@@ -1,7 +1,7 @@
 #pragma once
 #include"Game3dObject.h"
 #include"OBBCollider.h"
-
+#include"ColliderConfig.h"
 class PlayerBullet:public OBBCollider
 {
 public:

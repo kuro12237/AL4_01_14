@@ -41,6 +41,13 @@ void WorldTransform::UpdateMatrix()
 	TransfarMatrix();
 }
 
+void WorldTransform::ParentUpdate()
+{
+	if (parent) {
+		matWorld = MatrixTransform::Multiply(matWorld, parent->matWorld);
+	}
+}
+
 
 
 void WorldTransform::TransfarMatrix()
