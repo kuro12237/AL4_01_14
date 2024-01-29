@@ -154,6 +154,12 @@
     <Filter Include="Project\GameObject\railCamera">
       <UniqueIdentifier>{f976f6bb-f4e6-42f1-9dd5-b2506bc560a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\SceneAnimation">
+      <UniqueIdentifier>{4979cd55-85de-4c6a-adef-2d8636140f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\SceneAnimation\state">
+      <UniqueIdentifier>{5cbaf62b-aee3-4651-be10-a800878aced0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -336,6 +342,18 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\RailCamera\RailCamera.cpp">
       <Filter>Project\GameObject\railCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\TitleScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\SceneChangeAnimation\SceneChangeAnimation.cpp">
+      <Filter>Project\SceneAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\SceneChangeAnimation\state\SceneChangeAnimationDownState.cpp">
+      <Filter>Project\SceneAnimation\state</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\SceneChangeAnimation\state\SceneChangeAnimationUpState.cpp">
+      <Filter>Project\SceneAnimation\state</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -566,6 +584,21 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\RailCamera\RailCamera.h">
       <Filter>Project\GameObject\railCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\TitleScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\SceneChangeAnimation\SceneChangeAnimation.h">
+      <Filter>Project\SceneAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\SceneChangeAnimation\state\ISceneChangeAnimationState.h">
+      <Filter>Project\SceneAnimation\state</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\SceneChangeAnimation\state\SceneChangeAnimationDownState.h">
+      <Filter>Project\SceneAnimation\state</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\SceneChangeAnimation\state\SceneChangeAnimationUpState.h">
+      <Filter>Project\SceneAnimation\state</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

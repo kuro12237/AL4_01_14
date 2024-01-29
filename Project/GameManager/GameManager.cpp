@@ -5,7 +5,7 @@ GameManager::GameManager()
 	Cleyera::Initialize();
 
 	WinApp::SetTiTleName(L"CLEYERA");
-	Scene_ = new GameScene();
+	Scene_ = new TitleScene();
 
 	Scene_->Initialize();
 }

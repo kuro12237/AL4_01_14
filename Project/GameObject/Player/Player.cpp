@@ -21,7 +21,7 @@ void Player::Initialize()
 	gameReticleObject_->SetModel(modelHandle_);
 	gameReticleObject_->SetColor({ 1,0,0,1 });
 
-	reticleTexHandle_ = TextureManager::LoadTexture("Reticle.png");
+	reticleTexHandle_ = TextureManager::LoadPngTexture("Reticle.png");
 	sprite_ = make_unique<Sprite>();
 	sprite_->Initialize(new SpriteBoxState,{-32.0f,-32.0f});
 	sprite_->SetTexHandle(reticleTexHandle_);
@@ -181,8 +181,8 @@ void Player::ReticleUpdate(const ViewProjection& view)
 	//コントロール
 	RJoyPos_ = Input::GetJoyRStickPos();
 	Vector2 RVelocity{ RJoyPos_.x ,RJoyPos_.y };
-	SpritePos_.x = SpritePos_.x + RVelocity.x*5;
-	SpritePos_.y = SpritePos_.y - RVelocity.y*5;
+	SpritePos_.x = SpritePos_.x + RVelocity.x*10;
+	SpritePos_.y = SpritePos_.y - RVelocity.y*10;
 
 	spriteWorldTransform_.translate.x = SpritePos_.x;
 	spriteWorldTransform_.translate.y = SpritePos_.y;

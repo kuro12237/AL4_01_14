@@ -2,7 +2,7 @@
 
 void FireParticle::Initialize(Vector3 pos)
 {
-	smokeTexHandle = TextureManager::LoadTexture("smoke.png");
+	smokeTexHandle = TextureManager::LoadPngTexture("smoke.png");
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(smokeTexHandle);
 	particle_->Initialize(new ParticlePlaneState, 1000);

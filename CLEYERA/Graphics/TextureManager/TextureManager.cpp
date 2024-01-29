@@ -18,7 +18,7 @@ void TextureManager::Finalize()
 	AllUnLoadTexture();
 }
 
-uint32_t TextureManager::LoadTexture(const string& filePath)
+uint32_t TextureManager::LoadPngTexture(const string& filePath)
 {
 	string FilePath = "Resources/textures/" + filePath;
 	if (TextureManager::GetInstance()->isCreateObjectLoad_)

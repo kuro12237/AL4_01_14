@@ -162,3 +162,26 @@ Vector3 VectorTransform::Catmull_Rom(Vector3& p0, Vector3& p1, Vector3& p2, Vect
 			(2 * p0.z - 5 * p1.z + 4 * p2.z - p3.z) * t2 + (-p0.z + p2.z) * t + 2 * p1.z)
 	);
 }
+
+float VectorTransform::easeOutBounce(float t)
+{
+
+	const float n1 = 7.5625f;
+	const float d1 = 2.75f;
+
+	if (t < 1.0f / d1) {
+		return n1 * t * t;
+	}
+	else if (t < 2.0f / d1)
+	{
+		return n1 * (t - 1.5f / d1) * t + 0.75f;
+	}
+	else if (t < 2.5f / d1)
+	{
+		return n1 * (t - 2.25f / d1) * t + 0.9375f;
+	}
+	else
+	{
+		return n1 * (t - 2.625f / d1) * t + 0.984375f;
+	}
+}

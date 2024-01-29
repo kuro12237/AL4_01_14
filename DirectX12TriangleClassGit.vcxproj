@@ -83,8 +83,12 @@
     <ClCompile Include="Project\GameObject\TestLight\TestLeftLight.cpp" />
     <ClCompile Include="Project\GameObject\TestLight\TestRightLight.cpp" />
     <ClCompile Include="Project\GameObject\TestSphere\TestSphere.cpp" />
+    <ClCompile Include="Project\SceneChangeAnimation\SceneChangeAnimation.cpp" />
+    <ClCompile Include="Project\SceneChangeAnimation\state\SceneChangeAnimationDownState.cpp" />
+    <ClCompile Include="Project\SceneChangeAnimation\state\SceneChangeAnimationUpState.cpp" />
     <ClCompile Include="Project\Scene\CGScene.cpp" />
     <ClCompile Include="Project\Scene\GameScene.cpp" />
+    <ClCompile Include="Project\Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Audio\AudioDataResource.h" />
@@ -160,9 +164,14 @@
     <ClInclude Include="Project\GameObject\TestLight\TestLeftLight.h" />
     <ClInclude Include="Project\GameObject\TestLight\TestRightLight.h" />
     <ClInclude Include="Project\GameObject\TestSphere\TestSphere.h" />
+    <ClInclude Include="Project\SceneChangeAnimation\SceneChangeAnimation.h" />
+    <ClInclude Include="Project\SceneChangeAnimation\state\ISceneChangeAnimationState.h" />
+    <ClInclude Include="Project\SceneChangeAnimation\state\SceneChangeAnimationDownState.h" />
+    <ClInclude Include="Project\SceneChangeAnimation\state\SceneChangeAnimationUpState.h" />
     <ClInclude Include="Project\Scene\CGScene.h" />
     <ClInclude Include="Project\Scene\GameScene.h" />
     <ClInclude Include="Project\Scene\IScene.h" />
+    <ClInclude Include="Project\Scene\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\LightingObject3d.PS.hlsl">

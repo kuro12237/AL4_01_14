@@ -74,7 +74,7 @@ uint32_t ModelManager::LoadObjectFile(string directoryPath)
 		}
 
 		TextureManager::UnUsedFilePath();
-		uint32_t texHandle = TextureManager::LoadTexture(modelData.material.textureFilePath);
+		uint32_t texHandle = TextureManager::LoadPngTexture(modelData.material.textureFilePath);
 		modelData.material.handle = texHandle;
 
 		unique_ptr<Model>model = make_unique <Model>();

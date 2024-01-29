@@ -15,7 +15,7 @@ public:
 	static void Initialize();
 	static void Finalize();
 
-	static uint32_t LoadTexture(const string& filePath);
+	static uint32_t LoadPngTexture(const string& filePath);
 	static void UnLoadTexture(const string& filePath);
 	static void AllUnLoadTexture();
 	

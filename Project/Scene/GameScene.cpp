@@ -20,7 +20,7 @@ void GameScene::Initialize()
 	player_->SetParent(&railCamera_->GetWorldTransform());
 	railCameraSpriteON_ = make_unique<Sprite>();
 	railCameraSpriteON_->Initialize(new SpriteBoxState);
-	uint32_t tex = TextureManager::LoadTexture("RailCameraPushA.png");
+	uint32_t tex = TextureManager::LoadPngTexture("RailCameraPushA.png");
 	railCameraSpriteON_->SetTexHandle(tex);
 	railCameraSpriteWorldTransform_.Initialize();
 }
@@ -28,6 +28,8 @@ void GameScene::Initialize()
 void GameScene::Update(GameManager* Scene)
 {
 	Scene;
+
+	SceneChangeAnimation::Update();
 
 	EnemysUpdate();
 
@@ -72,6 +74,7 @@ void GameScene::Flont2dSpriteDraw()
 {
 	railCameraSpriteON_->Draw(railCameraSpriteWorldTransform_, viewProjection_);
 	player_->FrontDraw(viewProjection_);
+	SceneChangeAnimation::Draw(viewProjection_);
 }
 
 void GameScene::EnemySpown()
