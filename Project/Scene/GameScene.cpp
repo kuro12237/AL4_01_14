@@ -23,30 +23,50 @@ void GameScene::Initialize()
 	uint32_t tex = TextureManager::LoadPngTexture("RailCameraPushA.png");
 	railCameraSpriteON_->SetTexHandle(tex);
 	railCameraSpriteWorldTransform_.Initialize();
+
+	tex = TextureManager::LoadPngTexture("titleChangePushB.png");
+	titleChangeSprite_ = make_unique<Sprite>();
+	titleChangeSprite_->Initialize(new SpriteBoxState);
+	titleChangeSprite_->SetTexHandle(tex);
+	titleChangeWorldTransform_.Initialize();
+	titleChangeWorldTransform_.translate.y = 128.0f;
 }
 
 void GameScene::Update(GameManager* Scene)
 {
 	Scene;
 
-	SceneChangeAnimation::Update();
 
 	EnemysUpdate();
 
 	player_->Update(viewProjection_);
 
 	skydome_->Update();
+	
 	if (Input::PushBottonPressed(XINPUT_GAMEPAD_A))
 	{
 		RailCameraOnFlag_ = true;
 	}
+	if (Input::PushBottonPressed(XINPUT_GAMEPAD_B))
+	{
+		SceneChangeAnimation::SetChangeFinishFlag(false);
+	
+	}
+	SceneChangeAnimation::Update();
 
 	if (RailCameraOnFlag_)
 	{
 		railCamera_->Update();
 	}
+
 	Collision();
 
+	if (SceneChangeAnimation::GetInstance()->GetSceneChangeFlag())
+	{
+		Scene->ChangeState(new TitleScene);
+		return;
+	}
+	titleChangeWorldTransform_.UpdateMatrix();
 	viewProjection_.matView_ = railCamera_->GetViewProjection().matView_;
 	viewProjection_.matProjection_ = railCamera_->GetViewProjection().matProjection_;
 	railCameraSpriteWorldTransform_.UpdateMatrix();
@@ -59,8 +79,6 @@ void GameScene::Back2dSpriteDraw()
 
 void GameScene::Object3dDraw()
 {
-
-	//railCamera_->Draw(viewProjection_);
 	player_->Draw(viewProjection_);
 
 	for (shared_ptr<Enemy>& enemy : enemys_)
@@ -73,7 +91,9 @@ void GameScene::Object3dDraw()
 void GameScene::Flont2dSpriteDraw()
 {
 	railCameraSpriteON_->Draw(railCameraSpriteWorldTransform_, viewProjection_);
+	titleChangeSprite_->Draw(titleChangeWorldTransform_, viewProjection_);
 	player_->FrontDraw(viewProjection_);
+
 	SceneChangeAnimation::Draw(viewProjection_);
 }
 

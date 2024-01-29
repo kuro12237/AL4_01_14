@@ -6,7 +6,7 @@ void SceneChangeAnimationUpState::Update(SceneChangeAnimation* state)
 
 	Move(state);
 
-	if (state->Getcolor().w >= endColor_.y)
+	if (state->Getcolor().w < endColor_.w)
 	{
 		state->SetChangeFinishFlag(true);
 		state->SetChangeEndFlag(false);

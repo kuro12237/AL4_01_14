@@ -50,7 +50,12 @@ private:
 	uint32_t enemyHandle_ = 0;
 
 	unique_ptr<CollisionManager>collisionManager_ = nullptr;
+
 	unique_ptr<Sprite>railCameraSpriteON_ = nullptr;
 	WorldTransform railCameraSpriteWorldTransform_ = {};
+
+	unique_ptr<Sprite>titleChangeSprite_ = nullptr;
+	WorldTransform titleChangeWorldTransform_ = {};
+
 	bool RailCameraOnFlag_ = false;
 };

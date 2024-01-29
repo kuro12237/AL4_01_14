@@ -45,6 +45,9 @@ void SceneChangeAnimation::Update()
 	if (SceneChangeAnimation::GetInstance()->changeFinishFlag_)
 	{
 		SceneChangeAnimation::GetInstance()->state_.release();
+		SceneChangeAnimation::GetInstance()->SceneChangeFlag_ = false;
+		SceneChangeAnimation::GetInstance()->changeStartFlag_ = false;
+		SceneChangeAnimation::GetInstance()->changeEndFlag_ = false;
 	}
 
 	//開始

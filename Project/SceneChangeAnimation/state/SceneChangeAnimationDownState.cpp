@@ -23,10 +23,10 @@ void SceneChangeAnimationDownState::Move(SceneChangeAnimation* state)
 
 Vector3 SceneChangeAnimationDownState::BounseLeap(Vector3 s, Vector3 e, float t)
 {
-	return Vector3(
+	return VectorTransform::Lerp(s, e, VectorTransform::easeOutBounce(t))
 		s.x + (e.x - s.x) * VectorTransform::easeOutBounce(t),
 		s.y + (e.y - s.y) * VectorTransform::easeOutBounce(t),
 		s.z + (e.z - s.z) * VectorTransform::easeOutBounce(t)
-	);
+		);
 
 }
